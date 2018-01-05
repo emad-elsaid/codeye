@@ -20,17 +20,14 @@ func Contributors() [][]string {
 	repo, err := git.PlainOpen(cwd)
 	checkError(err)
 
-	head, err := repo.Head()
+	logs, err := repo.Log(&git.LogOptions{})
 	checkError(err)
 
-	logs, err := repo.Log(&git.LogOptions{From: head.Hash()})
-	checkError(err)
-
-	output := make([][]string, 0, 100)
+	commitsCountPerAuthor := newCounter()
 	err = logs.ForEach(func(c *object.Commit) error {
-		output = append(output, []string{c.Author.Name, c.Message})
+		commitsCountPerAuthor.add(c.Author.Name)
 		return nil
 	})
 
-	return output
+	return commitsCountPerAuthor.toA()
 }
