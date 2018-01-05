@@ -16,6 +16,24 @@ rails and other gems, and go will give me speed and one binary distribution, so
 I decided to go with Go for these reasons, also I wanted to push my skills
 towards Go and explore more of this language.
 
+## Installation
+
+There are 2 ways to do it
+
+1. If you have Go installed then
+
+    ```bash
+    go get github.com/emad-elsaid/codeye/...
+    ```
+
+2. You can download a precompiled binary for your system from the [latest
+   release page](https://github.com/emad-elsaid/codeye/releases/latest), and put
+   it in your `$PATH` to be able to invoke it without the full path
+
+## Usage
+
+Execute `codeye` in any git project you have, it will open a port service a web insterface for you to navigate
+
 ## Development
 
 ### Prerequisite
