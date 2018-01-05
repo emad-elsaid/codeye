@@ -13,7 +13,7 @@ func checkError(err error) {
 	}
 }
 
-func Contributors() [][]string {
+func Contributors() [][]interface{} {
 	cwd, err := os.Getwd()
 	checkError(err)
 
@@ -29,5 +29,15 @@ func Contributors() [][]string {
 		return nil
 	})
 
-	return commitsCountPerAuthor.toA()
+	var s sortable
+	for k, v := range commitsCountPerAuthor.count {
+		s = append(s, sortableRow{key: v, value: k})
+	}
+	s.Sort()
+
+	output := make([][]interface{}, 0, len(commitsCountPerAuthor.count))
+	for _, row := range s {
+		output = append(output, []interface{}{row.value.(string), row.key})
+	}
+	return output
 }

@@ -4,7 +4,7 @@ import "sort"
 
 type sortableRow struct {
 	key   int64
-	value string
+	value interface{}
 }
 type sortable []sortableRow
 
