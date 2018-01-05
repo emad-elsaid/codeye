@@ -1,0 +1,16 @@
+builds:
+  - main: cmd/codeye/codeye.go
+    binary: codeye
+    goos:
+      - windows
+      - darwin
+      - linux
+      - freebsd
+    goarch:
+      - amd64
+# Archive customization
+archive:
+  format: tar.gz
+  replacements:
+    amd64: 64-bit
+    darwin: macOS
