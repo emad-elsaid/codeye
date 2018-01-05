@@ -11,12 +11,20 @@ func check(err error) {
 	}
 }
 
+func htmlTemplate(file string) (t *template.Template) {
+	path := "assets/html/" + file
+	asset := string(MustAsset(path))
+
+	t, err := template.New(path).Parse(asset)
+	check(err)
+
+	return
+}
+
 var table *template.Template
 
 func init() {
-	var err error
-	table, err = template.New("home").Parse("<table>{{ range .}}<tr> {{range .}} <td>{{.}}</td> {{end}} </tr>{{end}}</table>")
-	check(err)
+	table = htmlTemplate("table.html")
 }
 
 func Table(w io.Writer, data interface{}) {

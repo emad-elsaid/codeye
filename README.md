@@ -39,6 +39,8 @@ Execute `codeye` in any git project you have, it will open a port service a web 
 ### Prerequisite
 
 * You need of course Go installed on your system with `$GOPATH` defined in your shell
+* `go-bindata` installed with `go get -u github.com/jteeuwen/go-bindata/...`
+* [goreleaser](https://goreleaser.com/) for releasing, if you don't want to release then ignore it,
 
 ### Having your own fork
 
@@ -49,6 +51,15 @@ Execute `codeye` in any git project you have, it will open a port service a web 
 * Add your repository as origin `git remote add origin <your repository remote url here>`
 * Happy hacking
 
+### Assets
+
+Codeye uses `go-bindata` to generate assets, so if you changed any of the assets you'll need to regenerate them in code.
+
+```bash
+go-bindata -pkg templates -o templates/assets.go assets/...
+```
+
+
 ### Running codeye in another project
 
 I usually execute that command while developing, to run codeye in another project called `news`
@@ -56,3 +67,8 @@ I usually execute that command while developing, to run codeye in another projec
 ```shell
 cd ~/code/news; go run ~/go/src/github.com/emad-elsaid/codeye/cmd/codeye/codeye.go
 ```
+
+### Releasing a new version
+
+1. add a tag to the branch and push it
+2. execute `goreleaser`
