@@ -7,13 +7,7 @@ import (
 	object "gopkg.in/src-d/go-git.v4/plumbing/object"
 )
 
-func checkError(err error) {
-	if err != nil {
-		panic(err)
-	}
-}
-
-func Contributors() [][]interface{} {
+func NewContributors() Contributors {
 	cwd, err := os.Getwd()
 	checkError(err)
 
@@ -23,21 +17,26 @@ func Contributors() [][]interface{} {
 	logs, err := repo.Log(&git.LogOptions{})
 	checkError(err)
 
-	commits := newCounter()
+	contributors := make(map[string]*Contributor)
+
 	err = logs.ForEach(func(c *object.Commit) error {
-		commits.add(c.Author.Name)
+		contributor, ok := contributors[c.Author.Name]
+
+		if !ok {
+			contributor = &Contributor{c.Author.Name, 1}
+			contributors[c.Author.Name] = contributor
+		} else {
+			contributor.commits++
+		}
+
 		return nil
 	})
 
-	var s sortable
-	for k, v := range commits.count {
-		s = append(s, sortableRow{key: v, value: k})
+	values := make(Contributors, 0, len(contributors))
+	for _, c := range contributors {
+		values = append(values, *c)
 	}
-	s.Sort()
+	values.Sort()
 
-	output := make([][]interface{}, 0, len(commits.count))
-	for _, row := range s {
-		output = append(output, []interface{}{row.value.(string), row.key})
-	}
-	return output
+	return values
 }

@@ -1,3 +1,19 @@
 {{ define "table" }}
-<table>{{ range .}}<tr> {{range .}} <td>{{.}}</td> {{end}} </tr>{{end}}</table>
+<div class="title">
+  {{.Title}}
+</div>
+
+<table class="table is-striped is-hoverable is-fullwidth">
+  <thead>
+    <tr>{{ range .Header}}<th>{{.}}</th>{{end}}</tr>
+  </thead>
+
+  <tbody>
+    {{ range .Rows}}<tr> {{range .}} <td>{{.}}</td> {{end}} </tr>{{end}}
+  </tbody>
+
+  <tfoot>
+    <tr>{{ range .Footer}}<th>{{.}}</th>{{end}}</tr>
+  </tfoot>
+</table>
 {{ end }}

@@ -1,17 +1,18 @@
-package handlers
+package controllers
 
 import (
 	"net/http"
 
 	"github.com/emad-elsaid/codeye/models"
-	"github.com/emad-elsaid/codeye/templates"
+	"github.com/emad-elsaid/codeye/views"
 )
 
 func Home(w http.ResponseWriter, r *http.Request) {
-	page := templates.Page{
+	page := views.Page{
 		Title:    "Home",
 		Template: "table",
-		Data:     models.Contributors(),
+		Navbar:   models.CurrentProject(),
+		Data:     views.Contributors(models.NewContributors()),
 	}
 	page.Render(w)
 }
