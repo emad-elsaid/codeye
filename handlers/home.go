@@ -9,5 +9,5 @@ import (
 
 func Home(w http.ResponseWriter, r *http.Request) {
 	contributors := models.Contributors()
-	templates.Table(w, contributors)
+	templates.Page(w, "Home", "table", contributors)
 }

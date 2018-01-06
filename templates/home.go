@@ -1,6 +1,7 @@
 package templates
 
 import (
+	"bytes"
 	"html/template"
 	"io"
 )
@@ -11,22 +12,37 @@ func check(err error) {
 	}
 }
 
-func htmlTemplate(file string) (t *template.Template) {
-	path := "assets/html/" + file
-	asset := string(MustAsset(path))
-
-	t, err := template.New(path).Parse(asset)
+func htmlTemplates(tmpl *template.Template) {
+	files, err := AssetDir("assets/html")
 	check(err)
 
-	return
+	for _, file := range files {
+		path := "assets/html/" + file
+		asset := string(MustAsset(path))
+
+		_, err := tmpl.Parse(asset)
+		check(err)
+	}
 }
 
-var table *template.Template
+var tmpl *template.Template
 
 func init() {
-	table = htmlTemplate("table.html")
+	tmpl = template.New("templates")
+	htmlTemplates(tmpl)
 }
 
-func Table(w io.Writer, data interface{}) {
-	table.Execute(w, data)
+func Page(w io.Writer, title string, templateName string, data interface{}) {
+
+	body := bytes.NewBufferString("")
+	tmpl.ExecuteTemplate(body, templateName, data)
+
+	page := struct {
+		Title string
+		Body  template.HTML
+	}{
+		title,
+		template.HTML(body.String()),
+	}
+	tmpl.ExecuteTemplate(w, "layout", page)
 }
