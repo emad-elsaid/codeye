@@ -8,6 +8,10 @@ import (
 )
 
 func Home(w http.ResponseWriter, r *http.Request) {
-	contributors := models.Contributors()
-	templates.Page(w, "Home", "table", contributors)
+	page := templates.Page{
+		Title:    "Home",
+		Template: "table",
+		Data:     models.Contributors(),
+	}
+	page.Render(w)
 }

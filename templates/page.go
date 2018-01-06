@@ -32,17 +32,18 @@ func init() {
 	htmlTemplates(tmpl)
 }
 
-func Page(w io.Writer, title string, templateName string, data interface{}) {
+type Page struct {
+	Title    string
+	Template string
+	Data     interface{}
+	Body     template.HTML
+}
+
+func (this *Page) Render(w io.Writer) {
 
 	body := bytes.NewBufferString("")
-	tmpl.ExecuteTemplate(body, templateName, data)
+	tmpl.ExecuteTemplate(body, this.Template, this.Data)
+	this.Body = template.HTML(body.String())
 
-	page := struct {
-		Title string
-		Body  template.HTML
-	}{
-		title,
-		template.HTML(body.String()),
-	}
-	tmpl.ExecuteTemplate(w, "layout", page)
+	tmpl.ExecuteTemplate(w, "layout", this)
 }

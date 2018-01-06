@@ -84,7 +84,7 @@ func assetsHtmlLayoutHtml() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "assets/html/layout.html", size: 664, mode: os.FileMode(420), modTime: time.Unix(1515204438, 0)}
+	info := bindataFileInfo{name: "assets/html/layout.html", size: 664, mode: os.FileMode(420), modTime: time.Unix(1515249907, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
