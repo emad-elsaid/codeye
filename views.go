@@ -1,16 +1,18 @@
-package views
+package codeye
 
 import (
 	"bytes"
+	"fmt"
 	"html/template"
 	"io"
-)
 
-const HTMLPath string = "assets/html"
+	"github.com/emad-elsaid/codeye/models"
+)
 
 var tmpl *template.Template
 
 func loadHTML(tmpl *template.Template) {
+	const HTMLPath string = "assets/html"
 	files, err := AssetDir(HTMLPath)
 	checkError(err)
 
@@ -45,4 +47,33 @@ func (this *Page) Render(w io.Writer) {
 	this.Body = template.HTML(body.String())
 
 	tmpl.ExecuteTemplate(w, "layout", this)
+}
+
+type Table struct {
+	Title  string
+	Header []interface{}
+	Rows   [][]interface{}
+	Footer []interface{}
+}
+
+func Contributors(contributors models.Contributors) *Table {
+	t := Table{
+		Title:  "Contributors",
+		Header: []interface{}{"Name", "Commits"},
+		Rows:   make([][]interface{}, len(contributors)),
+	}
+
+	for i, c := range contributors {
+		t.Rows[i] = []interface{}{c.Name(), c.Commits()}
+	}
+
+	t.Footer = []interface{}{
+		fmt.Sprintf("%d Contributor", len(contributors)),
+		contributors.TotalCommits(),
+	}
+	return &t
+}
+
+type Navbar struct {
+	Name string
 }

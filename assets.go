@@ -5,7 +5,7 @@
 // assets/html/table.html
 // DO NOT EDIT!
 
-package views
+package codeye
 
 import (
 	"bytes"

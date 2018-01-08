@@ -6,11 +6,7 @@ import (
 )
 
 type Project struct {
-	name string
-}
-
-func (this Project) Name() string {
-	return this.name
+	Name string
 }
 
 func CurrentProject() Project {
@@ -19,6 +15,6 @@ func CurrentProject() Project {
 	name := parts[len(parts)-1]
 
 	return Project{
-		name: name,
+		Name: name,
 	}
 }

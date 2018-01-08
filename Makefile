@@ -1,4 +1,4 @@
-all: assets.go
+all: compile_assets
 
-assets.go:
-	go-bindata -pkg views -o views/assets.go assets/...
+compile_assets:
+	go-bindata -pkg codeye -o assets.go assets/...
