@@ -13,11 +13,7 @@ import (
 
 type Contributor struct {
 	object.Signature
-	commits int
-}
-
-func (this *Contributor) Commits() int {
-	return this.commits
+	Commits int
 }
 
 func (this *Contributor) Image() string {
@@ -31,14 +27,14 @@ type Contributors []Contributor
 
 func (this Contributors) TotalCommits() (i int) {
 	for _, c := range this {
-		i += c.commits
+		i += c.Commits
 	}
 	return
 }
 
 func (this Contributors) Len() int           { return len(this) }
 func (this Contributors) Swap(i, j int)      { this[i], this[j] = this[j], this[i] }
-func (this Contributors) Less(i, j int) bool { return this[i].commits > this[j].commits }
+func (this Contributors) Less(i, j int) bool { return this[i].Commits > this[j].Commits }
 func (this Contributors) Sort()              { sort.Sort(this) }
 
 func NewContributors() Contributors {
@@ -61,14 +57,25 @@ func NewContributors() Contributors {
 			contributor = &Contributor{c.Author, 1}
 			contributors[c.Author.Name] = contributor
 		} else {
-			contributor.commits++
+			contributor.Commits++
 		}
 
 		return nil
 	})
 
-	values := make(Contributors, 0, len(contributors))
-	for _, c := range contributors {
+	by_email := make(map[string]*Contributor, len(contributors))
+	for _, v := range contributors {
+		contributor, ok := by_email[v.Email]
+
+		if ok {
+			v.Commits += contributor.Commits
+		}
+
+		by_email[v.Email] = v
+	}
+
+	values := make(Contributors, 0, len(by_email))
+	for _, c := range by_email {
 		values = append(values, *c)
 	}
 	values.Sort()
