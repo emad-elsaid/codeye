@@ -1,4 +1,27 @@
 {{ define "home" }}
+{{ with .FirstCommit }}
+<div class="box">
+  <article class="media">
+    <div class="media-left">
+      <figure class="image is-64x64">
+        <img src="{{ .Author.Image }}">
+      </figure>
+    </div>
+    <div class="media-content">
+      <div class="content">
+        <p>
+          <strong>{{ .Author.Name }}</strong> <small>{{ .Author.Email }}</small> <small>{{ .Author.When }}</small>
+          <br>
+          <strong>Hash:</strong> {{ .Hash }}
+          <br>
+          {{ .Message }}
+        </p>
+      </div>
+    </div>
+  </article>
+</div>
+{{ end }}
+{{ with .Contributors }}
 <div class="title">
   Contributors
 </div>
@@ -11,7 +34,18 @@
   <tbody>
     {{ range .}}
     <tr>
-      <td>{{ .Name }}</td>
+      <td>
+        <article class="media">
+          <div class="media-left">
+            <figure class="image is-32x32 is-pulled-left">
+              <img src="{{ .Image }}">
+            </figure>
+          </div>
+          <div class="media-content">
+            {{ .Name }}
+          </div>
+        </article>
+      </td>
       <td>{{ .Commits }}</td>
     </tr>
     {{end}}
@@ -24,4 +58,5 @@
     </tr>
   </tfoot>
 </table>
+{{end}}
 {{ end }}

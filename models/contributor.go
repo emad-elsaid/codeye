@@ -1,6 +1,9 @@
 package models
 
 import (
+	"crypto/md5"
+	"encoding/hex"
+	"fmt"
 	"os"
 	"sort"
 
@@ -9,16 +12,19 @@ import (
 )
 
 type Contributor struct {
-	name    string
+	object.Signature
 	commits int
-}
-
-func (this *Contributor) Name() string {
-	return this.name
 }
 
 func (this *Contributor) Commits() int {
 	return this.commits
+}
+
+func (this *Contributor) Image() string {
+	hash := md5.New()
+	hash.Write([]byte(this.Email))
+	segment := hex.EncodeToString(hash.Sum(nil))
+	return fmt.Sprintf("http://www.gravatar.com/avatar/%s", segment)
 }
 
 type Contributors []Contributor
@@ -44,6 +50,7 @@ func NewContributors() Contributors {
 
 	logs, err := repo.Log(&git.LogOptions{})
 	checkError(err)
+	defer logs.Close()
 
 	contributors := make(map[string]*Contributor)
 
@@ -51,7 +58,7 @@ func NewContributors() Contributors {
 		contributor, ok := contributors[c.Author.Name]
 
 		if !ok {
-			contributor = &Contributor{c.Author.Name, 1}
+			contributor = &Contributor{c.Author, 1}
 			contributors[c.Author.Name] = contributor
 		} else {
 			contributor.commits++

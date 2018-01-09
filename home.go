@@ -7,13 +7,20 @@ import (
 )
 
 func Home(w http.ResponseWriter, r *http.Request) {
+	data := struct {
+		Contributors models.Contributors
+		FirstCommit  *models.Commit
+	}{
+		models.NewContributors(),
+		models.FirstCommit(),
+	}
 	page := Page{
 		Title:    "Home",
 		Template: "home",
 		Navbar: Navbar{
 			Name: models.CurrentProject().Name,
 		},
-		Data: models.NewContributors(),
+		Data: data,
 	}
 	page.Render(w)
 }
