@@ -2,14 +2,16 @@ package codeye
 
 import (
 	"bytes"
-	"fmt"
 	"html/template"
 	"io"
-
-	"github.com/emad-elsaid/codeye/models"
 )
 
 var tmpl *template.Template
+
+func init() {
+	tmpl = template.New("views")
+	loadHTML(tmpl)
+}
 
 func loadHTML(tmpl *template.Template) {
 	const HTMLPath string = "assets/html"
@@ -23,11 +25,6 @@ func loadHTML(tmpl *template.Template) {
 		_, err := tmpl.Parse(asset)
 		checkError(err)
 	}
-}
-
-func init() {
-	tmpl = template.New("views")
-	loadHTML(tmpl)
 }
 
 type Page struct {
@@ -47,31 +44,6 @@ func (this *Page) Render(w io.Writer) {
 	this.Body = template.HTML(body.String())
 
 	tmpl.ExecuteTemplate(w, "layout", this)
-}
-
-type Table struct {
-	Title  string
-	Header []interface{}
-	Rows   [][]interface{}
-	Footer []interface{}
-}
-
-func Contributors(contributors models.Contributors) *Table {
-	t := Table{
-		Title:  "Contributors",
-		Header: []interface{}{"Name", "Commits"},
-		Rows:   make([][]interface{}, len(contributors)),
-	}
-
-	for i, c := range contributors {
-		t.Rows[i] = []interface{}{c.Name(), c.Commits()}
-	}
-
-	t.Footer = []interface{}{
-		fmt.Sprintf("%d Contributor", len(contributors)),
-		contributors.TotalCommits(),
-	}
-	return &t
 }
 
 type Navbar struct {

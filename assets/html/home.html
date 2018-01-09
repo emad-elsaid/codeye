@@ -1,0 +1,27 @@
+{{ define "home" }}
+<div class="title">
+  Contributors
+</div>
+
+<table class="table is-striped is-hoverable is-fullwidth">
+  <thead>
+    <tr><th>Name</th><th>Commits</th></tr>
+  </thead>
+
+  <tbody>
+    {{ range .}}
+    <tr>
+      <td>{{ .Name }}</td>
+      <td>{{ .Commits }}</td>
+    </tr>
+    {{end}}
+  </tbody>
+
+  <tfoot>
+    <tr>
+      <td>{{ len . }} Contributors</td>
+      <td>{{ .TotalCommits }} Commits</td>
+    </tr>
+  </tfoot>
+</table>
+{{ end }}

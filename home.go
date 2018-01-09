@@ -9,11 +9,11 @@ import (
 func Home(w http.ResponseWriter, r *http.Request) {
 	page := Page{
 		Title:    "Home",
-		Template: "table",
+		Template: "home",
 		Navbar: Navbar{
 			Name: models.CurrentProject().Name,
 		},
-		Data: Contributors(models.NewContributors()),
+		Data: models.NewContributors(),
 	}
 	page.Render(w)
 }
