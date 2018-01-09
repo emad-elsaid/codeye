@@ -1,62 +1,72 @@
 {{ define "home" }}
-{{ with .FirstCommit }}
-<div class="box">
-  <article class="media">
-    <div class="media-left">
-      <figure class="image is-64x64">
-        <img src="{{ .Author.Image }}">
-      </figure>
-    </div>
-    <div class="media-content">
-      <div class="content">
-        <p>
-          <strong>{{ .Author.Name }}</strong> <small>{{ .Author.Email }}</small> <small>{{ .Author.When }}</small>
-          <br>
-          <strong>Hash:</strong> {{ .Hash }}
-          <br>
-          {{ .Message }}
-        </p>
-      </div>
-    </div>
-  </article>
-</div>
-{{ end }}
-{{ with .Contributors }}
-<div class="title">
-  Contributors
-</div>
+<div class="columns">
+  <div class="column">
 
-<table class="table is-striped is-hoverable is-fullwidth">
-  <thead>
-    <tr><th>Name</th><th>Commits</th></tr>
-  </thead>
+    {{ with .Contributors }}
+    <div class="title"> Contributors </div>
 
-  <tbody>
-    {{ range .}}
-    <tr>
-      <td>
-        <article class="media">
-          <div class="media-left">
-            <figure class="image is-32x32 is-pulled-left">
-              <img src="{{ .Image }}">
-            </figure>
+    <table class="table is-striped is-hoverable is-fullwidth">
+      <thead>
+        <tr><th>Name</th><th>Commits</th></tr>
+      </thead>
+
+      <tbody>
+        {{ range .}}
+        <tr>
+          <td>
+            <article class="media">
+              <div class="media-left">
+                <figure class="image is-32x32 is-pulled-left">
+                  <img src="{{ .Image }}">
+                </figure>
+              </div>
+              <div class="media-content">
+                <strong>{{ .Name }}</strong> <small>{{ .Email }}</small>
+              </div>
+            </article>
+          </td>
+          <td>{{ .Commits }}</td>
+        </tr>
+        {{ end }}
+      </tbody>
+
+      <tfoot>
+        <tr>
+          <td>{{ len . }} Contributors</td>
+          <td>{{ .TotalCommits }} Commits</td>
+        </tr>
+      </tfoot>
+    </table>
+    {{ end }}
+
+  </div>
+  <div class="column">
+
+    {{ with .FirstCommit }}
+    <div class="title"> First Commit </div>
+
+    <div class="box">
+      <article class="media">
+        <div class="media-left">
+          <figure class="image is-64x64">
+            <img src="{{ .Author.Image }}">
+          </figure>
+        </div>
+        <div class="media-content">
+          <div class="content">
+            <p>
+              <strong>{{ .Author.Name }}</strong> <small>{{ .Author.Email }}</small> <small>{{ .Author.When }}</small>
+              <br>
+              <strong>Hash:</strong> {{ .Hash }}
+              <br>
+              {{ .Message }}
+            </p>
           </div>
-          <div class="media-content">
-            {{ .Name }}
-          </div>
-        </article>
-      </td>
-      <td>{{ .Commits }}</td>
-    </tr>
-    {{end}}
-  </tbody>
+        </div>
+      </article>
+    </div>
+    {{ end }}
 
-  <tfoot>
-    <tr>
-      <td>{{ len . }} Contributors</td>
-      <td>{{ .TotalCommits }} Commits</td>
-    </tr>
-  </tfoot>
-</table>
-{{end}}
+  </div>
+</div>
 {{ end }}

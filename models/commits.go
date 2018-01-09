@@ -22,17 +22,22 @@ func FirstCommit() *Commit {
 	repo, err := git.PlainOpen(cwd)
 	checkError(err)
 
-	commits, err := repo.CommitObjects()
+	iter, err := repo.Log(&git.LogOptions{})
 	checkError(err)
-	var last_c *object.Commit
 
-	commits.ForEach(func(c *object.Commit) error {
-		if last_c == nil || last_c.Committer.When.Unix() > c.Committer.When.Unix() {
-			last_c = c
-		}
+	commit, err := iter.Next()
+	checkError(err)
 
-		return nil
-	})
+	first := firstParent(commit)
 
-	return &Commit{*last_c}
+	return &Commit{*first}
+}
+
+func firstParent(commit *object.Commit) *object.Commit {
+	parents := commit.Parents()
+	parent_commit, err := parents.Next()
+	if err != nil {
+		return commit
+	}
+	return firstParent(parent_commit)
 }

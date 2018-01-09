@@ -15,7 +15,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		models.FirstCommit(),
 	}
 	page := Page{
-		Title:    "Home",
+		Title:    "General Overview",
 		Template: "home",
 		Navbar: Navbar{
 			Name: models.CurrentProject().Name,
