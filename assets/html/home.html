@@ -16,12 +16,14 @@
           <td>
             <article class="media">
               <div class="media-left">
-                <figure class="image is-32x32 is-pulled-left">
+                <figure class="image is-64x64 is-pulled-left">
                   <img src="{{ .Image }}">
                 </figure>
               </div>
               <div class="media-content">
-                <strong>{{ .Name }}</strong> <small>{{ .Email }}</small>
+                <strong>{{ .Name }}</strong>
+                <br>
+                <small>{{ .Email }}</small>
               </div>
             </article>
           </td>
@@ -55,7 +57,9 @@
         <div class="media-content">
           <div class="content">
             <p>
-              <strong>{{ .Author.Name }}</strong> <small>{{ .Author.Email }}</small> <small>{{ .Author.When }}</small>
+              <strong>{{ .Author.Name }}</strong>
+              <small>{{ .Author.Email }}</small>
+              <small>{{ .Author.When }}</small>
               <br>
               <strong>Hash:</strong> {{ .Hash }}
               <br>
@@ -67,6 +71,27 @@
     </div>
     {{ end }}
 
+    {{ with .Files.ExtGroups }}
+    <div class="title"> Files Summary </div>
+    <table class="table is-striped is-hoverable is-fullwidth">
+      <thead>
+        <th>Type</th>
+        <th>Files</th>
+      </thead>
+      <tbody>
+        {{ range . }}
+        <tr>
+          <td>{{ .Ext }}</td>
+          <td>{{ len .Files }}</td>
+        </tr>
+        {{ end }}
+      </tbody>
+      <tfoot>
+        <th>{{ .Len }} Types</th>
+        <th></th>
+      </tfoot>
+    </table>
+    {{ end }}
   </div>
 </div>
 {{ end }}

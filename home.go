@@ -10,9 +10,11 @@ func Home(w http.ResponseWriter, r *http.Request) {
 	data := struct {
 		Contributors models.Contributors
 		FirstCommit  *models.Commit
+		Files        models.Files
 	}{
 		models.NewContributors(),
 		models.FirstCommit(),
+		models.FilesList(),
 	}
 	page := Page{
 		Title:    "General Overview",

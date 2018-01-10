@@ -48,14 +48,14 @@ func NewContributors() Contributors {
 	checkError(err)
 	defer logs.Close()
 
-	contributors := make(map[string]*Contributor)
+	by_email := make(map[string]*Contributor)
 
 	err = logs.ForEach(func(c *object.Commit) error {
-		contributor, ok := contributors[c.Author.Name]
+		contributor, ok := by_email[c.Author.Email]
 
 		if !ok {
 			contributor = &Contributor{c.Author, 1}
-			contributors[c.Author.Name] = contributor
+			by_email[c.Author.Email] = contributor
 		} else {
 			contributor.Commits++
 		}
@@ -63,19 +63,19 @@ func NewContributors() Contributors {
 		return nil
 	})
 
-	by_email := make(map[string]*Contributor, len(contributors))
-	for _, v := range contributors {
-		contributor, ok := by_email[v.Email]
+	by_name := make(map[string]*Contributor, len(by_email))
+	for _, v := range by_email {
+		contributor, ok := by_name[v.Name]
 
 		if ok {
 			v.Commits += contributor.Commits
 		}
 
-		by_email[v.Email] = v
+		by_name[v.Name] = v
 	}
 
-	values := make(Contributors, 0, len(by_email))
-	for _, c := range by_email {
+	values := make(Contributors, 0, len(by_name))
+	for _, c := range by_name {
 		values = append(values, *c)
 	}
 	values.Sort()

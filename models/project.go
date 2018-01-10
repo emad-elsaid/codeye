@@ -15,6 +15,6 @@ func CurrentProject() Project {
 	name := parts[len(parts)-1]
 
 	return Project{
-		Name: name,
+		Name: strings.Title(name),
 	}
 }
