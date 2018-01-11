@@ -18,17 +18,13 @@ towards Go and explore more of this language.
 
 ## Installation
 
-There are 2 ways to do it
+Download the binary for your system from here:
 
-1. If you have Go installed then
+| Windows                                                                                                                                                   | Linux                                                                                                                                               | FreeBSD                                                                                                                                                   | MacOS                                                                                                                                               |
+|-----------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
+| [![windows](http://www.emadelsaid.com/images/windows.png)](https://github.com/emad-elsaid/codeye/releases/download/v0.2/codeye_0.2_windows_64-bit.tar.gz) | [![linux](http://www.emadelsaid.com/images/linux.png)](https://github.com/emad-elsaid/codeye/releases/download/v0.2/codeye_0.2_linux_64-bit.tar.gz) | [![freebsd](http://www.emadelsaid.com/images/freebsd.png)](https://github.com/emad-elsaid/codeye/releases/download/v0.2/codeye_0.2_freebsd_64-bit.tar.gz) | [![macos](http://www.emadelsaid.com/images/macos.png)](https://github.com/emad-elsaid/codeye/releases/download/v0.2/codeye_0.2_macOS_64-bit.tar.gz) |
 
-    ```bash
-    go get github.com/emad-elsaid/codeye/...
-    ```
-
-2. You can download a precompiled binary for your system from the [latest
-   release page](https://github.com/emad-elsaid/codeye/releases/latest), and put
-   it in your `$PATH` to be able to invoke it without the full path
+Or latest version from [here](https://github.com/emad-elsaid/codeye/releases/latest)
 
 ## Usage
 
