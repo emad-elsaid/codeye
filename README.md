@@ -1,5 +1,9 @@
 # Codeye (Code Eye)
 
+<p align="center">
+<img src="http://www.emadelsaid.com/images/codeye.png" width="150" align="center">
+</p>
+
 When I join a new project I always find it hard to understand the current code
 structure, its history like when was it started, who worked on it so far, and
 other helpful tips that gives me context about code before diving in the code
