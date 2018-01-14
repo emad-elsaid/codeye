@@ -30,6 +30,10 @@ Download the binary for your system from here:
 
 Or latest version from [here](https://github.com/emad-elsaid/codeye/releases/latest)
 
+## Screenshots
+
+![](https://i.imgur.com/PN533rH.png)
+
 ## Usage
 
 Execute `codeye` in any git project you have, it will open a port service a web insterface for you to navigate
