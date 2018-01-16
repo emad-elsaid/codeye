@@ -1,0 +1,13 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/golang:1.9
+
+    working_directory: /go/src/github.com/emad-elsaid/codeye
+    steps:
+      - checkout
+      - run: go get -v -u github.com/golang/dep/cmd/dep
+      - run: dep ensure
+      - run: go build cmd/codeye/codeye.go
+      - run: go test
