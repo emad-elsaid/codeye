@@ -1,4 +1,6 @@
 # Codeye (Code Eye)
+[![Go Report Card](https://goreportcard.com/badge/github.com/emad-elsaid/codeye)](https://goreportcard.com/report/github.com/emad-elsaid/codeye)
+[![CircleCI](https://circleci.com/gh/emad-elsaid/codeye.svg?style=shield)](https://circleci.com/gh/emad-elsaid/codeye)
 
 <p align="center">
 <img src="http://www.emadelsaid.com/images/codeye.png" width="150" align="center">
