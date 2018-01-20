@@ -62,7 +62,7 @@ Execute `codeye` in any git project you have, it will open a port service a web 
 Codeye uses `go-bindata` to generate assets, so if you changed any of the assets you'll need to regenerate them in code.
 
 ```bash
-go-bindata -pkg views -o templates/assets.go assets/...
+go generate
 ```
 
 

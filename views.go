@@ -1,3 +1,4 @@
+//go:generate	go-bindata -pkg codeye -o assets.go assets/...
 package codeye
 
 import (
